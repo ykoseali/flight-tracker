@@ -83,7 +83,27 @@ HTML_TEMPLATE = '''
     </style>
 </head>
 <body>
-
+    <div class="container">
+        <h1>Flight Tracker</h1>
+        <form action="/" method="post">
+            <input type="text" name="callsign" placeholder="Enter Flight Callsign" required>
+            <button type="submit">Track Flight</button>
+        </form>
+        {% if flight_info %}
+            <h2>Flight Information:</h2>
+            <ul>
+                {% for key, value in flight_info.items() %}
+                <li><strong>{{ key.replace('_', ' ').capitalize() }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-data">No flight information available. Ensure the callsign is correct and the flight is currently active.</p>
+        {% endif %}
+        {% if map %}
+            <h2>Flight Location:</h2>
+            <div id="map">{{ map|safe }}</div>
+        {% endif %}
+    </div>
 </body>
 </html>
 '''
