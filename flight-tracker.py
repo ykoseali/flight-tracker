@@ -29,8 +29,11 @@ HTML_TEMPLATE = '''
             border-radius: 8px;
             width: 80%;
             max-width: 800px;
+            
+            height: 1200px;
         }
         h1 {
+            text-align: center;
             color: #333;
         }
         form {
@@ -39,25 +42,52 @@ HTML_TEMPLATE = '''
             align-items: center;
             margin-bottom: 20px;
         }
-        input[type="text"] {
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        #search-box{
+            position: relative;
+            cursor: text;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 0 16px;
+            height: 48px;
+            background-color: #fff;
+            border: 1px solid #168CAA;
+            border-radius: 3px;
+            color: rgb(35, 38, 59);
+            box-shadow: inset 0 1px 4px 0 rgb(119 122 175 / 30%);
+            overflow: hidden;
+            transition: all 100ms ease-in-out;
             width: 80%;
-            max-width: 400px;
+            max-width: 400px; 
+        }
+        search-box:focus{
+            border: 1px solid #116D84;
+            box-shadow: 0 1px 0 0 rgb(33, 158, 188 / 5%);
         }
         button {
-            padding: 10px 20px;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 4px;
+            margin: 20px 0;
+            display: inline-block;
+            outline: none;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
+            line-height: 1;
+            border-radius: 500px;
+            transition-property: background-color,border-color,color,box-shadow,filter;
+            transition-duration: .3s;
+            border: 1px solid transparent;
+            letter-spacing: 2px;
+            min-width: 160px;
+            text-transform: uppercase;
+            white-space: normal;
+            font-weight: 700;
+            text-align: center;
+            padding: 17px 48px;
+            color: #fff;
+            background-color: #219EBC;
+            height: 48px;  
         }
         button:hover {
-            background-color: #0056b3;
+            transform: scale(1.04);
+            background-color: #0F83A0;
         }
         ul {
             list-style-type: none;
@@ -75,9 +105,10 @@ HTML_TEMPLATE = '''
             height: 400px;
             width: 100%;
             border-radius: 8px;
-            margin-top: 20px;
+            margin: 20px, 0;
         }
         .no-data {
+            text-align: center;
             color: #888;
         }
     </style>
@@ -86,8 +117,10 @@ HTML_TEMPLATE = '''
     <div class="container">
         <h1>Flight Tracker</h1>
         <form action="/" method="post">
-            <input type="text" name="callsign" placeholder="Enter Flight Callsign" required>
-            <button type="submit">Track Flight</button>
+            <input id="search-box" type="search"  name="callsign" aria-label="Search" placeholder="Enter Flight Call Sign" required>
+            <button type="submit">Track Flight
+
+            </button>
         </form>
         {% if flight_info %}
             <h2>Flight Information:</h2>
@@ -97,10 +130,10 @@ HTML_TEMPLATE = '''
                 {% endfor %}
             </ul>
         {% else %}
-            <p class="no-data">No flight information available. Ensure the callsign is correct and the flight is currently active.</p>
+            <p class="no-data">No flight information is available. Ensure the call sign is correct and the flight is currently active.</p>
         {% endif %}
         {% if map %}
-            <h2>Flight Location:</h2>
+            <h3>Flight Location:</h3>
             <div id="map">{{ map|safe }}</div>
         {% endif %}
     </div>
