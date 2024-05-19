@@ -59,6 +59,7 @@ def create_map(latitude, longitude):
         return map_html
     logging.warning("Invalid latitude or longitude provided, cannot create map.")
     return None
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
     map_html = None
