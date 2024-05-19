@@ -42,3 +42,24 @@ def create_map(latitude, longitude):
         return map_html
     logging.warning("Invalid latitude or longitude provided, cannot create map.")
     return None
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    map_html = None
+    flight_info = {}
+    if request.method == 'POST':
+        callsign = request.form['callsign']
+        logging.info(f"Form submitted with callsign: {callsign}")
+        flight_data = fetch_flight_data(callsign)
+        if flight_data:
+            flight_info = flight_data
+            if flight_data['latitude'] and flight_data['longitude']:
+                map_html = create_map(flight_data['latitude'], flight_data['longitude'])
+            else:
+                logging.warning("Latitude or longitude not available for the flight.")
+        else:
+            logging.warning("No data returned for the specified callsign.")
+    return render_template_string(HTML_TEMPLATE, map=map_html, flight_info=flight_info)
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    app.run(host='0.0.0.0', port=5001, debug=True)
