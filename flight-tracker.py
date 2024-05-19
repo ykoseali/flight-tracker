@@ -5,6 +5,23 @@ import logging
 
 app = Flask(__name__)
 
+HTML_TEMPLATE = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Tracker</title>
+    <style>
+    
+    </style>
+    
+</head>
+<body>
+
+</body>
+</html>
+'''
+
 def fetch_flight_data(callsign):
     """ Fetch flight data from OpenSky """
     url = f"https://opensky-network.org/api/states/all?callsign={callsign.upper()}"
