@@ -14,7 +14,6 @@ HTML_TEMPLATE = '''
     <style>
     
     </style>
-    
 </head>
 <body>
 
