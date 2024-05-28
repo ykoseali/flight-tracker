@@ -147,13 +147,16 @@ def fetch_flight_data(callsign):
     response = requests.get(url)
     logging.info(f"API URL: {url}")
     if response.status_code == 200:
-        data = response.json().get('states', [])
+        data = response.json().get('states', None)
         logging.info(f"Data fetched: {data}")
+        if data is None:
+            logging.error("No data found in the API response.")
+            return None
         for state in data:
             if state[1] and state[1].strip().upper() == callsign.strip().upper():
                 logging.info(f"Exact match found: {state}")
                 return {
-                    'callsign': state[1],
+                    'call_sign': state[1],
                     'origin_country': state[2],
                     'longitude': state[5],
                     'latitude': state[6],
@@ -164,7 +167,7 @@ def fetch_flight_data(callsign):
                 }
         logging.warning("No exact match found for callsign.")
     else:
-        logging.error("Failed to fetch data from OpenSky API.")
+        logging.error(f"Failed to fetch data from OpenSky API. Status code: {response.status_code}")
     return None
 
 def create_map(latitude, longitude):
@@ -178,7 +181,7 @@ def create_map(latitude, longitude):
         return map_html
     logging.warning("Invalid latitude or longitude provided, cannot create map.")
     return None
-    
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     map_html = None
