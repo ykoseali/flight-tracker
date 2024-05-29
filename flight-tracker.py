@@ -118,9 +118,7 @@ HTML_TEMPLATE = '''
         <h1>Flight Tracker</h1>
         <form action="/" method="post">
             <input id="search-box" type="search"  name="callsign" aria-label="Search" placeholder="Enter Flight Call Sign" required>
-            <button type="submit">Track Flight
-
-            </button>
+            <button type="submit">Track Flight</button>
         </form>
         {% if flight_info %}
             <h2>Flight Information:</h2>
